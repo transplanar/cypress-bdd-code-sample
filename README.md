@@ -5,7 +5,7 @@ A sample end to end test suite to showcase my skills and methodology with end to
 # Setup
 
 - Install [nvm](https://github.com/nvm-sh/nvm)
-- `npm run init` to set node version with
+- `nvm install` to set node version with
 - `npm install` to install dependencies
 
 # Running Tests

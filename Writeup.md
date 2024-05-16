@@ -9,6 +9,22 @@
 7. Write step definitions for implementation details, heavily using reusable code to be housed in the `common-steps.ts`
 8. Ascertain edge cases and prioritize based on fictional user needs and target user personas
 
+# Approach
+
+My approach is built upon the principles of developer ergonomics and behavior-driven development.
+
+## Developer Ergonomics
+
+At each stage, I try to write tests that are highly readable, even to a non-technical audience. I use descriptive function and variable names to make my tests as self-documenting as possible. When using more abstract, reusable functions, I ensure there is appropriate annotation (via the JSDocs feature) for other developers to easily reference when they hover over the function or variable.
+
+## Behavior-Driven Development
+
+I use a Cucumber-based tool for writing tests. Structurally, this means that tests are divided into
+
+## Reusable Code
+
+- Make use of Maps and key/value pair lookup
+
 # Assumptions
 
 - This is a fictional scenario where the Google calculator app has only recently been created
@@ -48,3 +64,4 @@
 
 - You must click and focus the calculator before you can use the keyboard
 - Do not assume a backend or database unless stated otherwise
+- Real google calculator does not have unique selectors
