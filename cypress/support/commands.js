@@ -23,3 +23,8 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// TODO revisit maybe
+Cypress.Commands.overwrite("type", (originalFn, subject, text, options) => {
+  cy.get(subject).clear().invoke("val", text);
+});
