@@ -7,7 +7,7 @@ import {
   UIElement,
   calculatorUISelectors,
 } from "../../support/PageData/CalculatorUI";
-import { parseMathExpressionToClicks } from "../../support/Utilities";
+import { mathSymbolToKeystroke as convertMathSymbolsToKeyboardKeys, parseMathExpressionToClicks } from "../../support/Utilities";
 
 const digits = "12";
 const repeatDigitCount = 50;
@@ -23,17 +23,8 @@ const excessivelyLongNumberScientificNotation = "1.2121212121212122e+99";
  * and wait for it to multiple times every time a test is run.
  */
 Before(() => {
-  // const url = "http://localhost:5173/";
-  // cy.visit(url);
-
-  cy.visit("http://localhost:5173/", {
-    onBeforeLoad: (win) => {
-      Object.defineProperty(win.navigator, "userAgent", {
-        value:
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
-      });
-    },
-  });
+  const url = "http://localhost:5173/";
+  cy.visit(url);
 });
 
 When(
@@ -47,9 +38,12 @@ When(
   "the user enters {string} into the calculator via the keyboard",
   (input: string) => {
     const selector = calculatorUISelectors.get(UIElement.Display);
+
     cy
       .get(selector)
       .click();
+
+    input = convertMathSymbolsToKeyboardKeys(input);
 
     cy
       .get(selector)
@@ -112,8 +106,12 @@ When(
   }
 );
 
-When("the user presses {string}", (key: string) => {
-  cy.get("body").type(key);
+When("the user presses the {string} key", (key: string) => {
+  const selector = calculatorUISelectors.get(UIElement.Display);
+
+  cy
+    .get(selector)
+    .type(`"{${key}}"`);
 });
 
 Then(

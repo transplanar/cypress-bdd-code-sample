@@ -1,3 +1,8 @@
+# Submission Materials
+- This repository
+- Modified Google Calculator Clone repo
+- Documentation pdf
+
 # Methodology
 
 1. Make first pass on supporting documentation to establish a test plan
@@ -62,7 +67,6 @@ This approach allows Cucumber scenarios to be shared among team members, product
   - Google Calendar does have a mobile version, but neither the real Google Calendar nor the clone utilize responsive design. As such, it would require a separate tool, such as Saucelabs for manual mobile testing or Appium for automated mobile testing.
 
 # Capabilities
-
 - Numeric buttons
 - Mathematical operations
   - Addition
@@ -75,16 +79,13 @@ This approach allows Cucumber scenarios to be shared among team members, product
   - Decimal point
   - Erase (AC button)
   - More Info Link
-    - NOTE: This is now a "Feedback" link in the real app. Will just assume this goes to a static info page.
 
 # Tools
-
 - [Visual Studio Code](https://code.visualstudio.com/) (code editor)
 - [Chrome Browser](https://www.google.com/chrome/) (web browser)
 - [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) (browser developer tools within Chrome)
 - [Cypress.io](https://www.cypress.io/) (end-to-end testing framework)
 - [Cypress-Cucumber-Preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor) (Cucumber integration for Cypress)
-- [Husky](https://typicode.github.io/husky/#/) (pre-commit hooks)
 - [GitHub Copilot](https://copilot.github.com/) (AI pair programming tool)
 
 # NOTES
@@ -182,6 +183,7 @@ This contains the implementation details of the test case. It is written in Type
 - The clone throws an error if you press the equal sign before completing your math expression. The real app does not.
 - In the real calculator, the "AC" button changes to "CE" if you are in the middle of an expression, then changes back to "AC" after you click `=`. The clone functionally behaves the same way, but does not change the text of the button.
 - When dealing with negative numbers, the real Google Calculator appends a minus sign to the front of the number (`-2 + 3`). The clone appends the minus sign in front of the number separated by a space (`- 2 + 3`).
+- The real Google Calculator rounds decimal numbers to 12 significant digits. The clone rounds to 16 digits.
 
 
 # Manual Confirmation

@@ -17,3 +17,10 @@ export function parseMathExpressionToClicks(expression: string): void {
     });
   });
 }
+
+export function mathSymbolToKeystroke(input: string): string {
+  input = input.replace("÷", "/");
+  input = input.replace("×", "*");
+  
+  return input;
+}

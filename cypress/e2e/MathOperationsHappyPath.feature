@@ -30,9 +30,14 @@ Feature: Math Operations Happy Path
 
   Scenario: The User Can Interact with the Calculator via Keyboard Input
     When the user enters "2 + 1" into the calculator via the keyboard
-    And the user presses "enter"
+    And the user presses the "enter" key
     Then the "display" shows "3"
     And the "last math expression" shows "2 + 1"
+
+  Scenario: The Backspace Key Erases the Last Character Entered (AC functionality via Keyboard Input)
+    When the user enters "2 + 1" into the calculator via the keyboard
+    And the user presses the "backspace" key
+    Then the "display" shows "2 +"
 
   Scenario: The User Can Continue a Math Expression After Clicking Equals
     When the user enters "2 + 1" into the calculator via mouse clicks
@@ -51,7 +56,7 @@ Feature: Math Operations Happy Path
   # NOTE: If writing out the input is impractical, write it as a sentence instead
   Scenario: Large Numbers are Converted to Scientific Notation
     When the user enters an excessively long number into the calculator via the keyboard
-    And the user presses "enter"
+    And the user presses the "enter" key
     Then the "display" shows the number in scientific notation
 
   # NOTE Not functional, as clone does not have this capability
@@ -116,7 +121,7 @@ Feature: Math Operations Happy Path
   Scenario: Decimal Numbers are Handled Correctly
     When the user enters "88.5 ÷ 23" into the calculator via mouse clicks
     And the user clicks the "=" button
-    Then the "display" shows "3.8478260869565215"
+    Then the "display" shows "3.847826086956522"
 
   Scenario: An Error Message is Displayed if the User Presses the Equals Sign Without Completing their Math Expression
     When the user enters "88 ÷" into the calculator via mouse clicks
@@ -125,6 +130,11 @@ Feature: Math Operations Happy Path
 
   Scenario: Invalid Characters are Ignored When Using Keyboard Input
     When the user enters "88 ÷ 23" into the calculator via the keyboard
-    And the user enters "a" into the calculator via the keyboard
-    And the user presses "enter"
+    And the user enters "z" into the calculator via the keyboard
+    And the user presses the "enter" key
     Then the "display" shows "3.8260869565217392"
+
+  Scenario: All Numeric Buttons Work
+    When the user enters "1234567890" into the calculator via mouse clicks
+    And the user clicks the "=" button
+    Then the "display" shows "1234567890"

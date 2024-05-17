@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "cypress open --browser chrome --e2e"
+    "test": "cypress open --browser chrome --e2e",
+    "test:terminal": "cypress run --browser chrome --e2e"
   },
   "keywords": [],
   "author": "",
