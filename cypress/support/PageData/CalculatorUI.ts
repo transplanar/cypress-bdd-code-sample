@@ -2,7 +2,7 @@ import { SmartMap } from "../SmartMap";
 import { formatTestId } from "../Utilities";
 
 /**
- * Strictly speaking, this could be split into
+ * NOTE Strictly speaking, this could be split into
  * separate enums and maps for interactive versus
  * display elements. For simplicity, I will keep
  * them together here.
