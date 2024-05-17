@@ -4,7 +4,7 @@ import {
   calculatorUISelectors,
 } from "../../support/PageData/CalculatorUI";
 import {
-  mathSymbolToKeystroke as convertMathSymbolsToKeyboardKeys,
+  mathSymbolToKeystroke,
   parseMathExpressionToClicks,
 } from "../../support/Utilities";
 
@@ -35,7 +35,7 @@ When(
 
     cy.get(selector).click();
 
-    input = convertMathSymbolsToKeyboardKeys(input);
+    input = mathSymbolToKeystroke(input);
 
     cy.get(selector).type(input);
   }
