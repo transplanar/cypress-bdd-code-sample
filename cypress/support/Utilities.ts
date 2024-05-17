@@ -18,16 +18,3 @@ export function parseMathExpressionToClicks(expression: string): void {
       });
   });
 }
-
-export function convertToScientificNotation(number: string): string {
-  const num = parseFloat(number);
-  return num.toExponential();
-}
-
-export function clickAndLog(selector: string, buttonName: UIElement) {
-  cy.get(selector)
-    .click()
-    .then(() => {
-      cy.log(`👉 Click the "${buttonName}" button`);
-    });
-}

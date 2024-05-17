@@ -7,9 +7,12 @@ import {
   UIElement,
   calculatorUISelectors,
 } from "../../support/PageData/CalculatorUI";
-import { convertToScientificNotation, parseMathExpressionToClicks } from "../../support/Utilities";
+import { parseMathExpressionToClicks } from "../../support/Utilities";
 
-const excessivelyLongNumber = "9".repeat(200);
+const digits = "12";
+const repeatDigitCount = 50;
+const excessivelyLongNumber = digits.repeat(repeatDigitCount);
+const excessivelyLongNumberScientificNotation = "1.2121212121212122e+99";
 
 /**
  * By default, Cypress runs in "test isolation" mode, where the state of each test
@@ -104,7 +107,6 @@ Then(
   'the {string} shows the number in scientific notation',
   (displayElement: UIElement) => {
     const selector = calculatorUISelectors.get(displayElement);
-    const excessivelyLongNumberScientificNotation = convertToScientificNotation(excessivelyLongNumber);
 
     cy
       .get(selector)

@@ -9,6 +9,9 @@
 7. Write step definitions for implementation details, heavily using reusable code to be housed in the `common-steps.ts`
 8. Ascertain edge cases and prioritize based on fictional user needs and target user personas
 
+## Additional Notes
+- I have included some inline comments to explain my reasoning for certain code choices
+
 # Approach
 
 My approach is built upon the principles of developer ergonomics and behavior-driven development.
@@ -27,6 +30,7 @@ This approach allows Cucumber scenarios to be shared among team members, product
 
 - Make use of Maps and key/value pair lookup
 
+
 # Assumptions
 
 - This is a fictional scenario where the Google calculator app has only recently been created
@@ -37,6 +41,7 @@ This approach allows Cucumber scenarios to be shared among team members, product
 - Chrome is our target browser
 - This fictional Calculator app is assumed to behave in the same manner as the real Google Calcualtor app. Due to complications encountered in getting tests to run against the real Google Calculator app, I will be using a clone of the Google Calculator app instead. This clone is a close approximation of the real Google Calculator app, with a few exceptions. I call out these differences in the "[Differences Between Real Google Calculator and Google Calculator Clone](#differences-between-real-google-calculator-and-google-calculator-clone)" section below. Using this clone ensures the tests I provided are reliably executable. 
   - As a result, the user's action of opening up Google and typing in "calculator" will be skipped.
+  - Following the test pryamid model, I will assume the accuracy of the mathematical operations has been tested via unit tests. As such, I will prioritize testing user interactions behave as expected rather than exhaustively confirm calculations are correct.
 
   # Scope
   Confirm:
@@ -50,6 +55,7 @@ This approach allows Cucumber scenarios to be shared among team members, product
     - Invalid characters
     - Very large numbers
   - Negative numbers
+  - Cross browser?
 
 # Capabilities
 
