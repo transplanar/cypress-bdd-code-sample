@@ -35,7 +35,7 @@ At each stage, I try to write tests that are highly readable, even to a non-tech
 
 These tests are written using the cypress-cucumber-preprocessor plugin for Cypress. Tests using this tool consist of a "feature file" containing Cucumber scenarios and a corresponding "step definitions" file containing the implementation of the test logic.
 
-This approach allows Cucumber scenarios to be shared among team members, product owners, and other stakeholders. It outlines the expected behavior of the application in a human-readable format, promoting alignment across the team. When supported by a mature set of reusable step definitions, this enables parallel development of tests and feature code.
+This approach allows Cucumber scenarios to be shared among team members, product owners, and other stakeholders. It outlines the expected behavior of the application in a human-readable format, promoting alignment across the team. When supported by a mature set of reusable step definitions, this allows tests to be developed while the features under test are being developed. SDETs don't have to wait until the feature is complete.
 
 ### Scenario to Step Definition Mapping
 The default convention is for a particular feature file to have a corresponding step definitions file in a directory matching the name as shown below.
@@ -44,14 +44,15 @@ When Cypress parses through a feature file, it will look at the text of each sta
 
 #### Directory Structure Example
 ```
-cypress
--- e2e
----- MyCoolFeature
+/cypress
+-- /e2e
+---- /MyCoolFeature
 ------ MyCoolFeature.ts
 ---- MyCoolFeature.feature
 ...
----- support
------- common-steps.ts
+---- /support
+------ /step_definitions
+-------- common-steps.ts
 ```
 
 #### Scenario to Step Definition Mapping Example
@@ -62,7 +63,7 @@ Scenario: User can add two numbers
   When the user enters "2 + 2" into the calculator via mouse clicks
   ...
 ```
-Matches the following step definition function:
+It will match with the following step definition function:
 ```typescript
 When("the user enters {string} into the calculator via mouse clicks", (mathExpression: string) => {
   ...
@@ -80,7 +81,6 @@ Code reuse is achieved by carefully wording feature file scenarios to be paramat
 - This fictional Google calculator app behaves like the real one, minus the capabilities of the blurred out buttons as shown in the instructions
   - NOTE due to issues encountered attempting to integrate with the real Google Calculator, I will be using a clone of the Google Calculator app instead. This clone is a close approximation of the real Google Calculator app, with a few exceptions. I call out these differences in the "[Differences Between Real Google Calculator and Google Calculator Clone](#differences-between-real-google-calculator-and-google-calculator-clone)" section below. Using this clone ensures the tests I provided are reliably executable. 
   - As a result, the user's action of opening up Google and typing in "calculator" will be skipped.
-- This fictional Google calculator uses the same selectors (ids, classes, etc) as the real one
 - User is able to interact with the app via keyboard or mouse on a computer or laptop or touch on a smart device
 - Keyboard input is restricted to the numeric keys and mathematical function characters matching the unblurred calculator buttons from the instructions. 
 - Chrome is the target browser used for these tests
@@ -159,9 +159,23 @@ The result is that as the test suite matures, fewer new methods are required to 
 
 
 ### Example:
+Feature File:
 ```gherkin
 When the user clicks the "1" button
 ```
+PageData File:
+```typescript
+enum UIElement {
+  One = "1",
+  ...
+}
+...
+export const calculatorUISelectors = new SmartMap<UIElement, string>([
+  [UIElement.One, '[data-test-id="1"]'],
+  ...
+]);
+```
+Step Definition File:
 ```typescript
 When("the user clicks the {string} button", (button: UIElement) => {
   const selector = calculatorUISelectors.get(button);
@@ -179,16 +193,16 @@ In the spirit of developer ergonomics, I went ahead and created a function that 
 #### Example
 ##### Conventional Way
 ```gherkin
-When the user clicks the "1" button
+When the user clicks the "2" button
 And the user clicks the "+" button
-And the user clicks the "2" button
+And the user clicks the "1" button
 ```
 This version explicitly calls out step by step what the user is doing.
 ##### Ergonomic Way
 ```gherkin
 When the user enters "2 + 1" into the calculator via mouse clicks
 ```
-This version is functionally identical to the Conventional Way, but interprets "1 + 2" as a series of clicks on the 1, +, and 2 buttons respectively. See the `parseMathExpressionToClicks` function in `Utilities.ts`.
+This version is functionally identical to the Conventional Way, but interprets "2 + 1" as a series of clicks on the `2`, `+`, and `1` buttons respectively. See the `parseMathExpressionToClicks` function in `Utilities.ts`.
 
 ## Refactoring and Reorganizing
 After my first pass at writing tests, I moved around the contents of the one feature file I had into separate ones logically divided by what they were testing. I also moved most of the step definition functions to `common-steps.ts` to be shared across multiple feature files.
