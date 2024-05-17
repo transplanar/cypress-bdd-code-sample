@@ -1,18 +1,12 @@
-import {
-  Before,
-  Then,
-  When
-} from "@badeball/cypress-cucumber-preprocessor";
+import { Before, Then, When } from "@badeball/cypress-cucumber-preprocessor";
 import {
   UIElement,
   calculatorUISelectors,
 } from "../../support/PageData/CalculatorUI";
-import { mathSymbolToKeystroke as convertMathSymbolsToKeyboardKeys, parseMathExpressionToClicks } from "../../support/Utilities";
-
-const digits = "12";
-const repeatDigitCount = 50;
-const excessivelyLongNumber = digits.repeat(repeatDigitCount);
-const excessivelyLongNumberScientificNotation = "1.2121212121212122e+99";
+import {
+  mathSymbolToKeystroke as convertMathSymbolsToKeyboardKeys,
+  parseMathExpressionToClicks,
+} from "../../support/Utilities";
 
 /**
  * By default, Cypress runs in "test isolation" mode, where the state of each test
@@ -39,15 +33,11 @@ When(
   (input: string) => {
     const selector = calculatorUISelectors.get(UIElement.Display);
 
-    cy
-      .get(selector)
-      .click();
+    cy.get(selector).click();
 
     input = convertMathSymbolsToKeyboardKeys(input);
 
-    cy
-      .get(selector)
-      .type(input);
+    cy.get(selector).type(input);
   }
 );
 
@@ -59,15 +49,12 @@ Then(
     /**
      * Added because Cypress erroneously reports "" does not equal "" in
      * the assertion at the end of this function. This is a workaround.
-     * 
+     *
      * Ordinarily, using `invoke` should be used sparingly as it can
      * be slower.
      * */
     if (displayedText === "") {
-      cy
-        .get(selector)
-        .invoke("text")
-        .should("be.empty");
+      cy.get(selector).invoke("text").should("be.empty");
 
       return;
     }
@@ -77,50 +64,18 @@ Then(
       displayedText += " =";
     }
 
-    cy
-      .get(selector)
-      .should("have.text", displayedText);
+    cy.get(selector).should("have.text", displayedText);
   }
 );
 
 When("the user clicks the {string} button", (button: UIElement) => {
   const selector = calculatorUISelectors.get(button);
 
-  cy
-    .get(selector)
-    .click();
+  cy.get(selector).click();
 });
-
-When(
-  "the user enters an excessively long number into the calculator via the keyboard",
-  () => {
-    const selector = calculatorUISelectors.get(UIElement.Display);
-
-    cy
-      .get(selector)
-      .click();
-
-    cy
-      .get(selector)
-      .type(excessivelyLongNumber);
-  }
-);
 
 When("the user presses the {string} key", (key: string) => {
   const selector = calculatorUISelectors.get(UIElement.Display);
 
-  cy
-    .get(selector)
-    .type(`"{${key}}"`);
+  cy.get(selector).type(`"{${key}}"`);
 });
-
-Then(
-  'the {string} shows the number in scientific notation',
-  (displayElement: UIElement) => {
-    const selector = calculatorUISelectors.get(displayElement);
-
-    cy
-      .get(selector)
-      .should("have.text", excessivelyLongNumberScientificNotation);
-  }
-);
