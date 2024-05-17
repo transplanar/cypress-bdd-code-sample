@@ -23,8 +23,17 @@ const excessivelyLongNumberScientificNotation = "1.2121212121212122e+99";
  * and wait for it to multiple times every time a test is run.
  */
 Before(() => {
-  const url = "http://localhost:5173/";
-  cy.visit(url);
+  // const url = "http://localhost:5173/";
+  // cy.visit(url);
+
+  cy.visit("http://localhost:5173/", {
+    onBeforeLoad: (win) => {
+      Object.defineProperty(win.navigator, "userAgent", {
+        value:
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
+      });
+    },
+  });
 });
 
 When(
@@ -102,6 +111,10 @@ When(
       .type(excessivelyLongNumber);
   }
 );
+
+When("the user presses {string}", (key: string) => {
+  cy.get("body").type(key);
+});
 
 Then(
   'the {string} shows the number in scientific notation',

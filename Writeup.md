@@ -42,6 +42,7 @@ This approach allows Cucumber scenarios to be shared among team members, product
 - This fictional Calculator app is assumed to behave in the same manner as the real Google Calcualtor app. Due to complications encountered in getting tests to run against the real Google Calculator app, I will be using a clone of the Google Calculator app instead. This clone is a close approximation of the real Google Calculator app, with a few exceptions. I call out these differences in the "[Differences Between Real Google Calculator and Google Calculator Clone](#differences-between-real-google-calculator-and-google-calculator-clone)" section below. Using this clone ensures the tests I provided are reliably executable. 
   - As a result, the user's action of opening up Google and typing in "calculator" will be skipped.
   - Following the test pryamid model, I will assume the accuracy of the mathematical operations has been tested via unit tests. As such, I will prioritize testing user interactions behave as expected rather than exhaustively confirm calculations are correct.
+  - I assume the real-world Google Calculator would have some way of determining the user's geographic region and localize the display of decimal numbers (e.g. using a comma instead of a period). I will be excluding this from my tests here for the sake of focusing time elsewhere.
 
   # Scope
   Confirm:
@@ -56,6 +57,9 @@ This approach allows Cucumber scenarios to be shared among team members, product
     - Very large numbers
   - Negative numbers
   - Cross browser?
+
+  ## Out of Scope
+  - Google Calendar does have a mobile version, but neither the real Google Calendar nor the clone utilize responsive design. As such, it would require a separate tool, such as Saucelabs for manual mobile testing or Appium for automated mobile testing.
 
 # Capabilities
 
@@ -177,7 +181,19 @@ This contains the implementation details of the test case. It is written in Type
   - The real app clears the input field and the last expression display
 - The clone throws an error if you press the equal sign before completing your math expression. The real app does not.
 - In the real calculator, the "AC" button changes to "CE" if you are in the middle of an expression, then changes back to "AC" after you click `=`. The clone functionally behaves the same way, but does not change the text of the button.
+- When dealing with negative numbers, the real Google Calculator appends a minus sign to the front of the number (`-2 + 3`). The clone appends the minus sign in front of the number separated by a space (`- 2 + 3`).
 
 
-  # Manual Confirmation
-  - Last Expression display animates on update (this happens too fast for Cypress to catch)
+# Manual Confirmation
+- Last Expression display animates on update (this happens too fast for Cypress to catch)
+
+
+# Notable Details
+- Configured to skip tests marked with the `@ignore` tag
+
+# Additional Considerations and Future Improvements
+- If we were to speculate that this calculator app would be expanded and have more tests in the future, we may want to consider implementing "bail" functionality. For example, suppose we were testing the real calculator app, and had a step where we navigated to google.com. If google.com is not available, we can create logic to prevent all downstream tests from running. The toolset in use in these samples does not have an easy way to do this aside from an if statement for each step definition. Other tools do offer this functionality more natively, however.
+- The Cypress-Cucumber-Preprocessor does not have the ability to flag Cucumber scenarios as pending, unlike a tool like SerenityJS. This is a useful flag for writing feature files early in the development process, as it allows you to lay out a roadmap of features. This gives you the benefit of an up-to-date snapshot of what features are complete, failing, or pending, as well as enable more accurate test coverage assessment. Given additional time and resources, one might develop a custom plugin to add this functionality.
+- When running in a pipeline, configuring the pipeline to use parallelization is a great way to receive faster test results. This can be achieved when running Cypress in a CI/CD context out of the box. Allowing this to be done locally may be a viable option should the test suite become large and complex, though it would require an additional plugin.
+- Husky is a great tool for automating linter checks and fixes triggered on commit. When supported with robust, agreed-upon linting rules, this can help ensure code quality and consistency across the team.
+- Over time and as the suite grows in complexity, you would likely want to split what is now in `Utilities` into separate helper classes or files for easier discoverability of utility functions.

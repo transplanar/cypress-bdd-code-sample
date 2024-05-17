@@ -1,4 +1,4 @@
-import { UIElement, calculatorUISelectors } from "./PageData/CalculatorUI";
+import { calculatorUISelectors } from "./PageData/CalculatorUI";
 
 export function formatTestId(testId: string): string {
   return `[data-test-id="${testId}"]`;
@@ -8,13 +8,12 @@ export function parseMathExpressionToClicks(expression: string): void {
   const components = expression.split(" ");
 
   components.forEach((component: string) => {
-    const selector = calculatorUISelectors.get(component);
+    component.split("").forEach((digit: string) => {  
+      const selector = calculatorUISelectors.get(digit);
 
-    cy
-      .get(selector)
-      .click()
-      .then(() => {
-        cy.log(`👉 Click the "${component}" button`);
-      });
+      cy
+        .get(selector)
+        .click();
+    });
   });
 }
