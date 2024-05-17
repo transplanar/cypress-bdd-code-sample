@@ -4,8 +4,8 @@ The assignment for this assessment is to create an end to end test framework for
 See the README.md file for details on how to setup and run the tests I have provided.
 
 ## Submission Materials
-- This repository
-- Modified Google Calculator Clone repo
+- [Github Link to This Repository](https://github.com/transplanar/autodesk-code-assessment)
+- [Github Link to the Google Calculator Clone Repository](https://github.com/transplanar/google-calculator-clone)
 - PDF and Markdown version of this text file
 
 # Methodology
