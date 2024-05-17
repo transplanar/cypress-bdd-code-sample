@@ -2,13 +2,15 @@
 
 A sample end to end test suite to showcase my skills and methodology with end to end testing.
 
-For demonstration purposes, this test uses a clone of the Google Calculator app found here: https://github.com/warlock1996/google-calculator-clone. The version included with my submission materials contains minor modifications to fix missing selectors.
+For demonstration purposes, I am using a clone of the Google Calculator app forked from https://github.com/warlock1996/google-calculator-clone. The version included with my submission materials contains minor modifications to fix missing selectors.
 
 The real Google Calculator has several countermeasures in place that prevent end to end tests from working reliably.
 
 # Setup
 - Install [Google Chrome](https://www.google.com/chrome/)
 - Install [nvm](https://github.com/nvm-sh/nvm)
+- Clone this repo in the manner you like: https://github.com/transplanar/autodesk-code-assessment
+- Clone the Google Calculator clone repo in the manner you like: https://github.com/transplanar/google-calculator-clone
 - In your terminal, navigate to this repo and run:
   - `nvm install` to install the correct node version (loaded from the `.nvmrc` file)
   - `npm install` to install dependencies
