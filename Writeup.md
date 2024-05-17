@@ -33,6 +33,9 @@ I use a Cucumber-based tool for writing tests. Structurally, this means that tes
 - User is able to interact with the app via keyboard or mouse on a computer or laptop or touch on a smart device
 - Keyboard input is restricted to the numeric keys and mathematical function characters matching the unblurred calculator buttons from the instructions. The exception to this is the `e` character, to support scientific notation for very large numbers.
 - Chrome is our target browser
+- The real Google Calculator app is not suitable for testing due to its countermeasures against web scraping. A clone of the Google Calculator app will be used instead, simulating testing this fictional Google Calculator app in a lower environment (instead of embedded within the Google search page). The one thing it does not have is a history button. I will write tests for thi as well, but they will not be executible.
+- The clone deviates in some behaviors:
+  - After a user clicks the equals button and the result is displayed, if a user continues to type numbers, it will append those numbers to the number in the display. I will write a test based on the real world behavior of the Google Calculator app, but I will mark the test as disabled.
 
 # Capabilities
 
@@ -64,4 +67,16 @@ I use a Cucumber-based tool for writing tests. Structurally, this means that tes
 
 - You must click and focus the calculator before you can use the keyboard
 - Do not assume a backend or database unless stated otherwise
-- Real google calculator does not have unique selectors
+- Real google calculator does not have unique selectors. It seems designed against web scraping
+
+# Process
+
+I started by setting up tests to run against the real google.com and its calculator component. Unfortunately, this posed several problems. For one, even loading the page in Cypress reliably has proven difficult. It seems to run additional scripts that trip up Cypress's ability to detect it is on the page. So it does not reliably load the page that is useful for testing.
+
+On the few attempts where the calculator was reached, the buttons themselves lack unique selectors, or where they do exist, they appear to be auto-generated in a way to deter web scraping. As a result, the real Google Calculator will not be suitable for this testing excercise.
+
+I have, however, found a clone of the Google Calculator that works perfectly. It works the same way as the real and fictional Calculator described in the assessment, and crucially already has `data-test-id` custom properties on each button, which will make it far easier to write tests against. I will proceed with using this clone as it suits the purpose of demonstrating my methodology and skills.
+
+# TODO
+
+- Figure out how to flag @ignore tests as skipped
