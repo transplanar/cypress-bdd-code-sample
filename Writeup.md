@@ -202,6 +202,9 @@ This contains a Cucumber scenario written in Gherkin syntax. It is a human-reada
 ## Step Definition File
 This contains the implementation details of the test case. It is written in TypeScript and uses the Cypress API to interact with the browser. A step definition function can either directly correspond to a particular feature file statement or be a reusable function that can be used across multiple feature files found in `common-steps.ts`.
 
+### Interacting with the Page
+One of the benefits of the Google Calculator Clone is that it has unique selectors for each element on the page. These unique selectors are the `data-test-id` custom property added to various elements on the page. It gives Cypress an easy way to locate and interact with the elements and is in line with [best practices recommended by Cypress](https://docs.cypress.io/guides/references/best-practices#Selecting-Elements).
+
 # Differences Between Real Google Calculator and Google Calculator Clone
 - The real Google Calculator is embedded in the Google Search Engine. The clone is a standalone component.
 - The real Google Calculator has a history button in the top left for reviewing previously entered math expressions and answers. The clone does not.
