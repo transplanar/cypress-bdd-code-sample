@@ -1,4 +1,4 @@
-# Autodesk Code Assessment
+# Cypress BDD Code Sample
 
 A sample end to end test suite to showcase my skills and methodology with end to end testing.
 
